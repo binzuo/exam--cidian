@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="dictionary">
+    <insert id="add" parameterType="dictionary" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO exam.dictionary (
+    chinese, 
+    english, 
+    property, 
+    sentence
+        )
+        VALUES (
+    #{chinese}, 
+    #{english}, 
+    #{property}, 
+    #{sentence}
+        );
+    </insert>
+    <delete id="remove">
+        DELETE FROM exam.dictionary
+        WHERE dictionary.id = #{id}
+    </delete>
+    <update id="modify">
+        UPDATE exam.dictionary
+        SET
+    chinese = #{chinese}, 
+    english = #{english}, 
+    property = #{property}, 
+    sentence = #{sentence}
+        WHERE dictionary.id = #{id}
+    </update>
+    <select id="list" resultType="dictionary">
+        SELECT *
+        FROM exam.dictionary
+        ORDER BY id
+    </select>
+    <select id="query" parameterType="dictionary" resultType="dictionary">
+        SELECT *
+        FROM exam.dictionary
+        <where>
+            <if test="id != null and id != ''">
+            dictionary.id = #{id}
+            </if>
+            <if test="chinese != null and chinese != ''"> AND chinese LIKE "%"#{chinese}"%"</if>
+            <if test="english != null and english != ''"> AND english LIKE "%"#{english}"%"</if>
+            <if test="property != null and property != ''"> AND property LIKE "%"#{property}"%"</if>
+            <if test="sentence != null and sentence != ''"> AND sentence LIKE "%"#{sentence}"%"</if>
+        </where>
+    </select>
+    <select id="search" resultType="dictionary">
+        SELECT *
+        FROM exam.dictionary
+        WHERE dictionary.id = #{id}
+    </select>
+    <select id="queryAll" parameterType="dictionary" resultType="dictionary">
+        SELECT *
+        FROM exam.dictionary
+        WHERE dictionary.english LIKE concat('%', #{english}, '%') OR dictionary.chinese LIKE concat('%', #{chinese}, '%')
+    </select>
+</mapper>

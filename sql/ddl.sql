@@ -14,8 +14,26 @@ CREATE TABLE exam.user (
   COMMENT 'admin:管理员; user:普通用户'
 )
   COMMENT '用户表';
+# dictionary table
+DROP TABLE IF EXISTS exam.dictionary;
+CREATE TABLE exam.dictionary (
+  id       INT                   AUTO_INCREMENT PRIMARY KEY
+  COMMENT 'PK',
+  chinese VARCHAR(255) NOT NULL
+  COMMENT '中文',
+  english VARCHAR(255) NOT NULL
+  COMMENT '英文',
+   property    VARCHAR(255) NOT NULL
+  COMMENT '属性',
+  sentence VARCHAR(255) NOT NULL
+  COMMENT '例句'
+)
+  COMMENT '词典表';
+
 
 INSERT INTO exam.user VALUES (NULL, 'a', 'a', 'admin');
 
 SELECT *
 FROM exam.user;
+SELECT *
+FROM exam.dictionary;
